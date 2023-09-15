@@ -2,9 +2,10 @@ package main
 
 // MetaData represents meta-data object
 type MetaData struct {
-	ID string `json:"id"`
+	ID          string   `json:"id"`
 	Site        string   `json:"site" binding:"required"`
 	Description string   `json:"description" binding:"required"`
+	Bucket      string   `json:"bucket" binding:"required"`
 	Tags        []string `json:"tags"`
 }
 
