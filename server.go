@@ -12,7 +12,12 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/meta", func(c *gin.Context) {
-		data := metadata()
+		data := metadata("")
+		c.AsciiJSON(http.StatusOK, data)
+	})
+	r.GET("/meta/:site", func(c *gin.Context) {
+		site := c.Param("site")
+		data := metadata(site)
 		c.AsciiJSON(http.StatusOK, data)
 	})
 	r.POST("/meta", func(c *gin.Context) {

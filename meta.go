@@ -2,7 +2,7 @@ package main
 
 // MetaData represents meta-data object
 type MetaData struct {
-	Site        string   `json:"site binding:"required""`
+	Site        string   `json:"site" binding:"required"`
 	Description string   `json:"description" binding:"required"`
 	Tags        []string `json:"tags"`
 }
@@ -12,7 +12,7 @@ type MetaData struct {
 var _metaData []MetaData
 
 // helper function to return existing meta-data
-func metadata() []MetaData {
+func metadata(site string) []MetaData {
 	// example of adding meta-data
 	/*
 		var out []MetaData
@@ -37,5 +37,14 @@ func metadata() []MetaData {
 		return out
 	*/
 	// so far we will return our global _metaData list
-	return _metaData
+	if site == "" {
+		return _metaData
+	}
+	var out []MetaData
+	for _, r := range _metaData {
+		if r.Site == site {
+			out = append(out, r)
+		}
+	}
+	return out
 }
