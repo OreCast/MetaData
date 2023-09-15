@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/hex"
 	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func setupRouter() *gin.Engine {
@@ -26,6 +28,11 @@ func setupRouter() *gin.Engine {
 		var meta MetaData
 		err := c.BindJSON(&meta)
 		if err == nil {
+			if meta.ID == "" {
+				if uuid, err := uuid.NewRandom(); err == nil {
+					meta.ID = hex.EncodeToString(uuid[:])
+				}
+			}
 			_metaData = append(_metaData, meta)
 			c.JSON(200, gin.H{"status": "ok"})
 		} else {
