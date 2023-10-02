@@ -19,6 +19,9 @@ type Configuration struct {
 	LogFile string `json:"log_file"` // server log file
 	Port    int    `json:"port"`     // server port number
 	Verbose int    `json:"verbose"`  // verbose output
+
+	// orecast parts
+	AuthzClientId string `json:"authz_client_id"` // client id of OAuth
 }
 
 // Config variable represents configuration object
