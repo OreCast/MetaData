@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	authz "github.com/OreCast/Authz/auth"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,13 +17,18 @@ func setupRouter() *gin.Engine {
 	r.GET("/meta", MetaHandler)
 	r.GET("/meta/:site", MetaSiteHandler)
 
-	// POST routes
-	r.POST("/meta", MetaPostHandler)
+	// all POST methods ahould be authorized
+	authorized := r.Group("/")
+	authorized.Use(authz.TokenMiddleware(Config.AuthzClientId, Config.Verbose))
+	{
+		authorized.POST("/meta", MetaPostHandler)
+	}
 
 	return r
 }
 
 func Server(configFile string) {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	r := setupRouter()
 	sport := fmt.Sprintf(":%d", Config.Port)
 	log.Printf("Start HTTP server %s", sport)
