@@ -3,7 +3,7 @@ module github.com/OreCast/MetaData
 go 1.21.0
 
 require (
-	github.com/OreCast/Authz/auth v0.0.0-20231002172245-1d3438afcaa7
+	github.com/OreCast/common/authz v0.0.0-20231003104242-62c0b468258a
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.3.1
 )
