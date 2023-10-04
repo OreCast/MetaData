@@ -12,6 +12,11 @@ type SiteParams struct {
 	Site string `uri:"site" binding:"required"`
 }
 
+// MetaIdForm represents URI storage params in /meta end-point
+type MetaIdForm struct {
+	ID string `form:"id" binding:"required"`
+}
+
 // MetaHandler provives access to GET /meta end-point
 func MetaHandler(c *gin.Context) {
 	data := metadata("")
@@ -42,6 +47,22 @@ func MetaPostHandler(c *gin.Context) {
 			}
 		}
 		_metaData = append(_metaData, meta)
+		c.JSON(200, gin.H{"status": "ok"})
+	} else {
+		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
+	}
+}
+
+// MetaDeleteHandler provides access to Delete /meta/:mid end-point
+func MetaDeleteHandler(c *gin.Context) {
+	var form MetaIdForm
+	if err := c.ShouldBindUri(&form); err == nil {
+		var metaData []MetaData
+		for _, meta := range _metaData {
+			if meta.ID != form.ID {
+				metaData = append(metaData, meta)
+			}
+		}
 		c.JSON(200, gin.H{"status": "ok"})
 	} else {
 		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
