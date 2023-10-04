@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/hex"
-	"errors"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -68,7 +67,7 @@ func MetaDeleteHandler(c *gin.Context) {
 		if len(_metaData) == len(metaData) {
 			// record was not found
 			msg := fmt.Sprintf("record %s was not found in MetaData service", params.ID)
-			c.JSON(400, gin.H{"status": "fail", "error": errors.New(msg)})
+			c.JSON(400, gin.H{"status": "fail", "error": msg})
 			return
 		}
 		_metaData = metaData
