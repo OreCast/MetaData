@@ -1,6 +1,10 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	oreConfig "github.com/OreCast/common/config"
+)
 
 // MetaData represents meta-data object
 type MetaData struct {
@@ -18,7 +22,7 @@ var _metaData []MetaData
 // helper function to return existing meta-data
 func metadata(site string) []MetaData {
 	// so far we will return our global _metaData list
-	if Config.Verbose > 0 {
+	if oreConfig.Config.MetaData.WebServer.Verbose > 0 {
 		log.Println("metadata for site=", site)
 	}
 	if site == "" {
@@ -26,7 +30,7 @@ func metadata(site string) []MetaData {
 	}
 	var out []MetaData
 	for _, r := range _metaData {
-		if Config.Verbose > 0 {
+		if oreConfig.Config.MetaData.WebServer.Verbose > 0 {
 			log.Printf("MetaData record %+v matching site %s", r, site)
 		}
 		if r.Site == site {
