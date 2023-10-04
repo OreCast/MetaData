@@ -2,19 +2,21 @@ package main
 
 import (
 	"encoding/hex"
+	"errors"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
-// SiteParams represents URI storage params in /meta end-point
+// SiteParams represents URI storage params in /meta/:site end-point
 type SiteParams struct {
 	Site string `uri:"site" binding:"required"`
 }
 
-// MetaIdForm represents URI storage params in /meta end-point
-type MetaIdForm struct {
-	ID string `form:"id" binding:"required"`
+// MetaIdParams represents URI storage params in /meta/:mid end-point
+type MetaIdParams struct {
+	ID string `uri:"mid" binding:"required"`
 }
 
 // MetaHandler provives access to GET /meta end-point
@@ -55,14 +57,21 @@ func MetaPostHandler(c *gin.Context) {
 
 // MetaDeleteHandler provides access to Delete /meta/:mid end-point
 func MetaDeleteHandler(c *gin.Context) {
-	var form MetaIdForm
-	if err := c.ShouldBindUri(&form); err == nil {
+	var params MetaIdParams
+	if err := c.ShouldBindUri(&params); err == nil {
 		var metaData []MetaData
 		for _, meta := range _metaData {
-			if meta.ID != form.ID {
+			if meta.ID != params.ID {
 				metaData = append(metaData, meta)
 			}
 		}
+		if len(_metaData) == len(metaData) {
+			// record was not found
+			msg := fmt.Sprintf("record %s was not found in MetaData service", params.ID)
+			c.JSON(400, gin.H{"status": "fail", "error": errors.New(msg)})
+			return
+		}
+		_metaData = metaData
 		c.JSON(200, gin.H{"status": "ok"})
 	} else {
 		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
