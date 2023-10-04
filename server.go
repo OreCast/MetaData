@@ -23,7 +23,7 @@ func setupRouter() *gin.Engine {
 	authorized.Use(authz.TokenMiddleware(oreConfig.Config.Authz.ClientId, oreConfig.Config.MetaData.Verbose))
 	{
 		authorized.POST("/meta", MetaPostHandler)
-		authorized.DELETE("/meta", MetaDeleteHandler)
+		authorized.DELETE("/meta/:mid", MetaDeleteHandler)
 	}
 
 	return r
