@@ -48,6 +48,8 @@ func MetaPostHandler(c *gin.Context) {
 			}
 		}
 		_metaData = append(_metaData, meta)
+		// insert into MongoDB
+		meta.mongoInsert()
 		c.JSON(200, gin.H{"status": "ok"})
 	} else {
 		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
@@ -62,6 +64,8 @@ func MetaDeleteHandler(c *gin.Context) {
 		for _, meta := range _metaData {
 			if meta.ID != params.ID {
 				metaData = append(metaData, meta)
+				// remove record from MongoDB
+				meta.mongoRemove()
 			}
 		}
 		if len(_metaData) == len(metaData) {

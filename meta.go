@@ -4,6 +4,8 @@ import (
 	"log"
 
 	oreConfig "github.com/OreCast/common/config"
+	oreMongo "github.com/OreCast/common/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // MetaData represents meta-data object
@@ -13,6 +15,36 @@ type MetaData struct {
 	Description string   `json:"description" binding:"required"`
 	Bucket      string   `json:"bucket" binding:"required"`
 	Tags        []string `json:"tags"`
+}
+
+// Record converts MetaData to MongoDB record
+func (m *MetaData) Record() oreMongo.Record {
+	rec := make(oreMongo.Record)
+	rec["id"] = m.ID
+	rec["site"] = m.Site
+	rec["description"] = m.Description
+	rec["bucket"] = m.Bucket
+	rec["tags"] = m.Tags
+	return rec
+}
+
+// insert MetaData record to MongoDB
+func (m *MetaData) mongoInsert() {
+	var records []oreMongo.Record
+	records = append(records, m.Record())
+	oreMongo.Insert(
+		oreConfig.Config.MetaData.MongoDB.DBName,
+		oreConfig.Config.MetaData.MongoDB.DBColl,
+		records)
+}
+
+// remove MetaData record from MongoDB
+func (m *MetaData) mongoRemove() {
+	spec := bson.M{"id": m.ID}
+	oreMongo.Remove(
+		oreConfig.Config.MetaData.MongoDB.DBName,
+		oreConfig.Config.MetaData.MongoDB.DBColl,
+		spec)
 }
 
 // global list of existing meta-data records

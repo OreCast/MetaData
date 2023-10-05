@@ -3,13 +3,16 @@ module github.com/OreCast/MetaData
 go 1.21.0
 
 require (
-	github.com/OreCast/common/authz v0.0.0-20231004124126-425fa159464d
-	github.com/OreCast/common/config v0.0.0-20231004124126-425fa159464d
+	github.com/OreCast/common/authz v0.0.0-20231005114436-f79d6cce30d3
+	github.com/OreCast/common/config v0.0.0-20231005114436-f79d6cce30d3
+	github.com/OreCast/common/mongo v0.0.0-20231005114436-f79d6cce30d3
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.3.1
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )
 
 require (
+	github.com/OreCast/common/utils v0.0.0-20231004124126-425fa159464d // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
@@ -41,6 +44,7 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
+	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
