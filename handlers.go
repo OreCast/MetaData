@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
+	oreConfig "github.com/OreCast/common/config"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -49,7 +50,10 @@ func MetaPostHandler(c *gin.Context) {
 		}
 		_metaData = append(_metaData, meta)
 		// upsert into MongoDB
-		meta.mongoUpsert("ID")
+		if oreConfig.Config.MetaData.MongoDB.DBUri != "" {
+			//         meta.mongoUpsert("ID")
+			meta.mongoInsert()
+		}
 		c.JSON(200, gin.H{"status": "ok"})
 	} else {
 		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
