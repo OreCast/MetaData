@@ -38,6 +38,17 @@ func (m *MetaData) mongoInsert() {
 		records)
 }
 
+// upsert MetaData record to MongoDB using given key
+func (m *MetaData) mongoUpsert(key string) {
+	var records []oreMongo.Record
+	records = append(records, m.Record())
+	oreMongo.Upsert(
+		oreConfig.Config.MetaData.MongoDB.DBName,
+		oreConfig.Config.MetaData.MongoDB.DBColl,
+		key,
+		records)
+}
+
 // remove MetaData record from MongoDB
 func (m *MetaData) mongoRemove() {
 	spec := bson.M{"id": m.ID}

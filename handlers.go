@@ -48,8 +48,8 @@ func MetaPostHandler(c *gin.Context) {
 			}
 		}
 		_metaData = append(_metaData, meta)
-		// insert into MongoDB
-		meta.mongoInsert()
+		// upsert into MongoDB
+		meta.mongoUpsert("ID")
 		c.JSON(200, gin.H{"status": "ok"})
 	} else {
 		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
