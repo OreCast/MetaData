@@ -1,18 +1,7 @@
 # MetaData Service
-Meta Data service for OreCast. It provides the following functionality:
-- RESTful APIs with JSON data format
-- it keeps information about participated sites like, site description, etc.
+Meta Data service for OreCast.
 
 ### OreCast APIs
-	r.GET("/meta", MetaHandler)
-	r.GET("/meta/:site", MetaSiteHandler)
-
-	// all POST methods ahould be authorized
-	authorized := r.Group("/")
-	authorized.Use(authz.TokenMiddleware(oreConfig.Config.Authz.ClientId, oreConfig.Config.MetaData.Verbose))
-	{
-		authorized.POST("/meta", MetaPostHandler)
-		authorized.DELETE("/meta/:mid", MetaDeleteHandler)
 
 #### public APIs
 - `/meta` get all meta data records
