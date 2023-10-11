@@ -82,3 +82,24 @@ func metadata(site string) []MetaData {
 	}
 	return out
 }
+
+// helper function to return existing meta-data
+func getRecord(mid string) []MetaData {
+	var out []MetaData
+	// so far we will return our global _metaData list
+	if oreConfig.Config.MetaData.WebServer.Verbose > 0 {
+		log.Println("metadata for mid=", mid)
+	}
+	if mid == "" {
+		return out
+	}
+	for _, r := range _metaData {
+		if oreConfig.Config.MetaData.WebServer.Verbose > 0 {
+			log.Printf("MetaData record %+v matching mid %s", r, mid)
+		}
+		if r.ID == mid {
+			out = append(out, r)
+		}
+	}
+	return out
+}

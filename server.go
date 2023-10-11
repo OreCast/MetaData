@@ -17,6 +17,7 @@ func setupRouter() *gin.Engine {
 
 	// GET routes
 	r.GET("/meta", MetaHandler)
+	r.GET("/meta/record/:mid", MetaRecordHandler)
 	r.GET("/meta/:site", MetaSiteHandler)
 
 	// all POST methods ahould be authorized

@@ -22,7 +22,6 @@ type MetaIdParams struct {
 // MetaHandler provives access to GET /meta end-point
 func MetaHandler(c *gin.Context) {
 	data := metadata("")
-	//     c.AsciiJSON(http.StatusOK, data)
 	c.JSON(200, gin.H{"status": "ok", "data": data})
 }
 
@@ -31,7 +30,17 @@ func MetaSiteHandler(c *gin.Context) {
 	var params SiteParams
 	if err := c.ShouldBindUri(&params); err == nil {
 		data := metadata(params.Site)
-		//         c.AsciiJSON(http.StatusOK, data)
+		c.JSON(200, gin.H{"status": "ok", "data": data})
+	} else {
+		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
+	}
+}
+
+// MetaRecordHandler provides access to GET /meta/:site end-point
+func MetaRecordHandler(c *gin.Context) {
+	var params MetaIdParams
+	if err := c.ShouldBindUri(&params); err == nil {
+		data := getRecord(params.ID)
 		c.JSON(200, gin.H{"status": "ok", "data": data})
 	} else {
 		c.JSON(400, gin.H{"status": "fail", "error": err.Error()})
