@@ -5,7 +5,8 @@ import (
 
 	oreConfig "github.com/OreCast/common/config"
 	oreMongo "github.com/OreCast/common/mongo"
-	"gopkg.in/mgo.v2/bson"
+	bson "go.mongodb.org/mongo-driver/bson"
+	// bson "gopkg.in/mgo.v2/bson"
 )
 
 // MetaData represents meta-data object
